@@ -1,9 +1,6 @@
 package io.javabrains;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -13,13 +10,12 @@ import java.util.List;
 public class JpaStarterMain {
     public static void main(String[] args) {
 
-        List<Employee> employeeList = createEmployeeList();
-
+        List<EmployeeAccess> employeeAccessList = createEmployeeAccessList();
 
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("org.hibernate.tutorial.jpa");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
 
-        saveEmployees(entityManager, employeeList);
+        saveEmployees(entityManager, employeeAccessList);
 
         Employee updatableEmployee = entityManager.find(Employee.class, 1);
         System.out.println("Printing employee from the database...\n" + updatableEmployee);
@@ -30,7 +26,6 @@ public class JpaStarterMain {
         entityManager.clear();
         entityManagerFactory.close();
     }
-
     private static void updateEmployee(EntityManager entityManager, Employee updatableEmployee) {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
@@ -38,17 +33,34 @@ public class JpaStarterMain {
         transaction.commit();
     }
 
-    private static void saveEmployees(EntityManager entityManager, List<Employee> employeeList) {
+    private static void saveEmployees(EntityManager entityManager, List<EmployeeAccess> employeeAccessList) {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
 
-        for(Employee e : employeeList) {
-            entityManager.persist(e);
+        for(EmployeeAccess e : employeeAccessList) {
+            entityManager.persist(e.getEmployee());
+            entityManager.persist(e.getAccessCard());
         }
         transaction.commit();
     }
 
-    public static List<Employee> createEmployeeList(){
+    public static List<EmployeeAccess> createEmployeeAccessList(){
+
+        EmployeeAccess employeeAccess1 = new EmployeeAccess();
+        EmployeeAccess employeeAccess2 = new EmployeeAccess();
+
+        AccessCard card1 = new AccessCard();
+        card1.setIssuedDate(new Date());
+        card1.setActive(true);
+        card1.setFirmwareVersion("1.0.0");
+
+        AccessCard card2 = new AccessCard();
+        card2.setIssuedDate(new Date());
+        card2.setActive(false);
+        card2.setFirmwareVersion("1.2.0");
+
+        System.out.println(card1 + " ------AND----- " + card2);
+
         Employee employee = new Employee();
         //employee.setId(1);
         employee.setSsn("4G49");
@@ -56,6 +68,7 @@ public class JpaStarterMain {
         employee.setDob(new Date());
         employee.setAge(20);
         employee.setType(EmployeeType.FULL_TIME);
+        employee.setCard(card1);
 
         Employee employee1 = new Employee();
         //employee1.setId(2);
@@ -64,11 +77,18 @@ public class JpaStarterMain {
         employee1.setDob(new Date());
         employee1.setAge(33);
         employee1.setType(EmployeeType.CONTRACTOR);
+        employee1.setCard(card2);
 
-        List<Employee> employeeList = new ArrayList<Employee>();
-        employeeList.add(employee);
-        employeeList.add(employee1);
+        employeeAccess1.setEmployee(employee);
+        employeeAccess1.setAccessCard(card1);
 
-        return  employeeList;
+        employeeAccess2.setEmployee(employee1);
+        employeeAccess2.setAccessCard(card2);
+
+        List<EmployeeAccess> employeeAccessListList = new ArrayList<EmployeeAccess>();
+        employeeAccessListList.add(employeeAccess1);
+        employeeAccessListList.add(employeeAccess2);
+
+        return  employeeAccessListList;
     }
 }

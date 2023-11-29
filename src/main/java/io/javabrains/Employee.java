@@ -23,6 +23,25 @@ public class Employee {
     @Column(unique = true, length = 10)
     private String ssn;
 
+    @OneToOne
+    private AccessCard card;
+
+    public AccessCard getCard() {
+        return card;
+    }
+
+    public void setCard(AccessCard card) {
+        this.card = card;
+    }
+
+    public String getDebugInfo() {
+        return debugInfo;
+    }
+
+    public void setDebugInfo(String debugInfo) {
+        this.debugInfo = debugInfo;
+    }
+
     public String getSsn() {
         return ssn;
     }
