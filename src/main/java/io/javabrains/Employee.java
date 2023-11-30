@@ -23,7 +23,7 @@ public class Employee {
     @Column(unique = true, length = 10)
     private String ssn;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private AccessCard card;
 
     public AccessCard getCard() {
@@ -108,6 +108,7 @@ public class Employee {
                 ", age=" + age +
                 ", dob=" + dob +
                 ", ssn='" + ssn + '\'' +
+                ", card=" + card +
                 ", type=" + type +
                 '}';
     }

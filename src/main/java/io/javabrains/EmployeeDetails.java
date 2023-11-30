@@ -1,8 +1,12 @@
 package io.javabrains;
 
-public class EmployeeAccess {
+import java.util.List;
+
+public class EmployeeDetails {
     private Employee employee;
     private AccessCard accessCard;
+
+    private List<PayStub> payStubList;
 
     public Employee getEmployee() {
         return employee;
@@ -18,5 +22,13 @@ public class EmployeeAccess {
 
     public void setAccessCard(AccessCard accessCard) {
         this.accessCard = accessCard;
+    }
+
+    public List<PayStub> getPayStubList() {
+        return payStubList;
+    }
+
+    public void setPayStubList(List<PayStub> payStubList) {
+        this.payStubList = payStubList;
     }
 }
