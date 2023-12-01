@@ -3,7 +3,7 @@ package io.javabrains;
 import javax.persistence.*;
 import java.util.Date;
 
-@Entity
+@Entity(name="PAY_STUB_DATA")
 public class PayStub {
 
     @Id
@@ -45,5 +45,16 @@ public class PayStub {
 
     public void setEmployee(Employee employee) {
         this.employee = employee;
+    }
+
+    @Override
+    public String toString() {
+        return "PayStub{" +
+                "id=" + id +
+                ", payPeriodBegin=" + payPeriodBegin +
+                ", payPeriodEnd=" + payPeriodEnd +
+                ", salary=" + salary +
+                ", employee=" + employee +
+                '}';
     }
 }
