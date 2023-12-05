@@ -57,6 +57,14 @@ public class Employee {
 
     private EmployeeType type;
 
+    // The default fetch type for ManyToMany relationships is LAZY. You don't want to fetch too much data and
+    // slow down your system.
+    // In this case however we've made the fetch type eager. If you fetch employee then email group will be
+    // fetched also because one can imagine that an employee isn't part of too many email groups
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name="email_group_subscriptions")
+    private List<EmailGroup> emailGroupList = new ArrayList<EmailGroup>();
+
     public List<PayStub> getPayStubList() {
         return payStubList;
     }
@@ -67,6 +75,10 @@ public class Employee {
 
     public void addPayStub(PayStub payStub){
         this.payStubList.add(payStub);
+    }
+
+    public void addEmailSubscription(EmailGroup emailGroup){
+        this.emailGroupList.add(emailGroup);
     }
 
     // Attempting to save an enum results in the ordinal being stored in the database
@@ -114,6 +126,14 @@ public class Employee {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<EmailGroup> getEmailGroupList() {
+        return emailGroupList;
+    }
+
+    public void setEmailGroupList(List<EmailGroup> emailGroupList) {
+        this.emailGroupList = emailGroupList;
     }
 
     @Override

@@ -8,6 +8,8 @@ public class EmployeeDetails {
 
     private List<PayStub> payStubList;
 
+    private List<EmailGroup> emailGroupList;
+
     public Employee getEmployee() {
         return employee;
     }
@@ -30,5 +32,13 @@ public class EmployeeDetails {
 
     public void setPayStubList(List<PayStub> payStubList) {
         this.payStubList = payStubList;
+    }
+
+    public List<EmailGroup> getEmailGroupList() {
+        return emailGroupList;
+    }
+
+    public void setEmailGroupList(List<EmailGroup> emailGroupList) {
+        this.emailGroupList = emailGroupList;
     }
 }

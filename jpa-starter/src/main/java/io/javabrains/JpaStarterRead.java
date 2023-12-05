@@ -36,11 +36,19 @@ public class JpaStarterRead {
         System.out.println(payStub.getEmployee());
         */
 
+        /*
         System.out.println("**************PAYSTUBS VIA EMPLOYEE*************");
         System.out.println("**************Before fetching the employee*************");
         Employee employee = entityManager.find(Employee.class, 1);
         System.out.println("**************Before fetching the paystubs*************");
         System.out.println(employee.getPayStubList());
+        */
+
+        EmailGroup emailGroup = entityManager.find(EmailGroup.class, 5);
+        System.out.println("*************Printing email groups*******************");
+        System.out.println(emailGroup);
+        System.out.println("*************Printing associated employees***********");
+        System.out.println(emailGroup.getEmployeeList());
     }
 
 }

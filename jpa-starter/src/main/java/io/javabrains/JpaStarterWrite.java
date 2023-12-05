@@ -47,6 +47,12 @@ public class JpaStarterWrite {
                     entityManager.persist(payStub);
                }
             }
+            if(e.getEmailGroupList() != null){
+                for(EmailGroup emailGroup : e.getEmailGroupList()){
+                    System.out.println(emailGroup);
+                    entityManager.persist(emailGroup);
+                }
+            }
         }
         transaction.commit();
     }
@@ -114,6 +120,29 @@ public class JpaStarterWrite {
         employee1.addPayStub(payStub1);
         employee1.addPayStub(payStub2);
 
+        EmailGroup group1 = new EmailGroup();
+        group1.setName("Company Watercooler Discussions");
+        group1.addEmailGroupMember(employee1);
+        group1.addEmailGroupMember(employee2);
+        employee1.addEmailSubscription(group1);
+        employee2.addEmailSubscription(group1);
+
+        /* Remember the cyclical relationship. If you have ManyToMany relationships between two entities,
+           it is best practice to set the values from both sides even though by setting the relationship
+           on only one side might still work("usually").
+         */
+
+        EmailGroup group2 = new EmailGroup();
+        group2.setName("Engineering Correspondence");
+        employee1.addEmailSubscription(group2);
+        group2.addEmailGroupMember(employee1);
+
+        List<EmailGroup> emailGroupList = new ArrayList<EmailGroup>();
+        emailGroupList.add(group1);
+        emailGroupList.add(group2);
+
+        //saveGenericEntityList(emailGroupList);
+
         List<PayStub> payStubList = new ArrayList<PayStub>();
         payStubList.add(payStub1);
         payStubList.add(payStub2);
@@ -123,6 +152,8 @@ public class JpaStarterWrite {
         payStub1.setEmployee(employee1);
         payStub2.setEmployee(employee1);
         employeeDetails1.setPayStubList(payStubList);
+        employeeDetails1.setEmailGroupList(emailGroupList);
+
 
 
         employeeDetails2.setEmployee(employee2);
@@ -134,4 +165,5 @@ public class JpaStarterWrite {
 
         return employeeDetailsList;
     }
+
 }
