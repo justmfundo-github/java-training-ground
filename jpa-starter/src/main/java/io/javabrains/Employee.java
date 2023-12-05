@@ -1,7 +1,9 @@
 package io.javabrains;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name="EMPLOYEE_DATA")
@@ -25,6 +27,9 @@ public class Employee {
 
     @OneToOne(fetch = FetchType.LAZY)
     private AccessCard card;
+
+    @OneToMany(mappedBy = "employee")
+    private List<PayStub> payStubList = new ArrayList<>();
 
     public AccessCard getCard() {
         return card;
@@ -52,6 +57,17 @@ public class Employee {
 
     private EmployeeType type;
 
+    public List<PayStub> getPayStubList() {
+        return payStubList;
+    }
+
+    public void setPayStubList(List<PayStub> payStubList) {
+        this.payStubList = payStubList;
+    }
+
+    public void addPayStub(PayStub payStub){
+        this.payStubList.add(payStub);
+    }
 
     // Attempting to save an enum results in the ordinal being stored in the database
     // I.e. if the value of the enum is at position 1, then the number 1 is saved as default.

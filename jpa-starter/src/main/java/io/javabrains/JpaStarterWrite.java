@@ -99,11 +99,24 @@ public class JpaStarterWrite {
         payStub2.setPayPeriodEnd(new Date());
         payStub2.setSalary(1000);
 
+        // The below line isn't strictly necessary because the relationship between paystub and employee
+        // is owned or managed on the paystub side. i.e payStub.setEmployee(payStub) already sorts out the
+        // assignment.
+        // But... JPA doesn't always update data WHEN called to do so. The instruction to update may happen later
+        // So to ensure that the assignment has happened on the employee side by the time I access data from the
+        // employee side in the code we perform cyclical relationships. I.e we do the assignment from the employee
+        // side too. i.e. employee.employee1.setPayStubList(List.of(payStub1, payStub2));
+        // JPA doesn't need the below line but it is recommended as a guarantee
+        /*employee1.setPayStubList(List.of(payStub1, payStub2));*/// Alternatively add a convenience method to Employee
+        // class to add paystub to the employee one by one as opposed to adding both to the list
+
+        // Using the addPayStub convenience method from Employee class
+        employee1.addPayStub(payStub1);
+        employee1.addPayStub(payStub2);
+
         List<PayStub> payStubList = new ArrayList<PayStub>();
         payStubList.add(payStub1);
         payStubList.add(payStub2);
-
-
 
         employeeDetails1.setEmployee(employee1);
         employeeDetails1.setAccessCard(card1);

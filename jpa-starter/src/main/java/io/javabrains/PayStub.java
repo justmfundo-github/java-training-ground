@@ -13,16 +13,19 @@ public class PayStub {
     private Date payPeriodEnd;
     private float salary;
     @ManyToOne
+    @JoinColumn(name = "paystub_for") // use @JoinColumn when giving names to a foreign key variable
     private Employee employee;
 
     public Date getPayPeriodBegin() {
         return payPeriodBegin;
     }
 
+    @Column(name="start")
     public void setPayPeriodBegin(Date payPeriodBegin) {
         this.payPeriodBegin = payPeriodBegin;
     }
 
+    @Column(name="end")
     public Date getPayPeriodEnd() {
         return payPeriodEnd;
     }
