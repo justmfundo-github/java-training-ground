@@ -62,7 +62,10 @@ public class Employee {
     // In this case however we've made the fetch type eager. If you fetch employee then email group will be
     // fetched also because one can imagine that an employee isn't part of too many email groups
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name="email_group_subscriptions")
+    @JoinTable(name="email_group_subscriptions",
+        joinColumns = @JoinColumn(name = "employee_id"),
+            inverseJoinColumns = @JoinColumn(name = "subscription_email_id")
+    )// customising the column names in the join table
     private List<EmailGroup> emailGroupList = new ArrayList<EmailGroup>();
 
     public List<PayStub> getPayStubList() {
