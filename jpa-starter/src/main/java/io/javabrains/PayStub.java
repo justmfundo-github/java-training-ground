@@ -12,6 +12,9 @@ public class PayStub {
     private Date payPeriodBegin;
     private Date payPeriodEnd;
     private float salary;
+    // This says when a PayStub is removed then the employee should be removed. You don't want that!!!!
+    //@ManyToOne(cascade = CascadeType.REMOVE)
+
     @ManyToOne
     @JoinColumn(name = "paystub_for") // use @JoinColumn when giving names to a foreign key variable
     private Employee employee;
