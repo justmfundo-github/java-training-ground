@@ -1,0 +1,27 @@
+/* ********************************* Mapping out the entity lifecycle ********************************* */
+
+
+                                        DETACHED
+
+
+
+                                merge(e)   detach(e)
+
+
+
+                                                        find(e)
+    TRANSIENT       persist(e)          MANAGED                             DATABASE
+                                                        flush(e)
+
+
+
+                                persist(e)  remove(e)
+
+
+                                        REMOVED                 flush(e)
+
+
+CLEAR AND REFRESH
+Clear:      performs an entity wide detach. I.e all managed entities are detached in one fell swoop
+Refresh:    goes back to the database to retrieve a clean copy of an entity. I.e if you had started to dirty/update
+            the entity and now desire the original entity from the database, you can use the refresh method.
