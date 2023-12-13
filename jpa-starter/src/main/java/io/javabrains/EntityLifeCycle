@@ -3,25 +3,27 @@
 
                                         DETACHED
 
-
-
+                                    |           |
+                                    |           |
                                 merge(e)   detach(e)
 
-
-
-                                                        find(e)
-    TRANSIENT       persist(e)          MANAGED                             DATABASE
-                                                        flush(e)
-
-
-
-                                persist(e)  remove(e)
-
-
+                                    |           |
+                                    |           |
+                                                 -----> find(e) -------->
+    TRANSIENT -----> persist(e) ----->  MANAGED                             DATABASE
+                                                 -----> flush(e) ------->
+                                    |           |
+                                    |           |
+                                    |           |
+                                remove(e)  persist(e)
+                                    |           |
+                                    |           |
                                         REMOVED                 flush(e)
 
 
 CLEAR AND REFRESH
-Clear:      performs an entity wide detach. I.e all managed entities are detached in one fell swoop
-Refresh:    goes back to the database to retrieve a clean copy of an entity. I.e if you had started to dirty/update
+Detach:     This operation removes the entity from the managed state. I.e this entity can no longer be persisted
+Clear:      Performs an entity wide detach. I.e all managed entities are detached in one fell swoop
+Refresh:    Goes back to the database to retrieve a clean copy of an entity. I.e if you had started to dirty/update
             the entity and now desire the original entity from the database, you can use the refresh method.
+Flush:
