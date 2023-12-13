@@ -40,10 +40,13 @@ public class JpaJPQLExample {
         //Query query = entityManager.createQuery("select e from Employee e where e.card.isActive = true");
 
         // Explicit Join
-        Query query = entityManager.createQuery("select e from Employee e join AccessCard a on e.card = a.id");
+        //Query query = entityManager.createQuery("select e from Employee e join e.card a where a.isActive");
+        // ERROR ERROR ERROR ERROR ERROR ERROR ERROR ERROR ERROR ERROR ERROR ERROR ERROR ERROR ERROR ERROR ERROR ERROR ERROR
+        TypedQuery<Employee> typedQueryJoin = entityManager.createQuery("select e from Employee e join e.card a where a.isActive", Employee.class);
 
-        List resultList = query.getResultList();
+        //List resultList = query.getResultList();
 
+        List resultList = typedQueryJoin.getResultList();
         resultList.forEach(System.out::println);
 
         entityManager.close();
