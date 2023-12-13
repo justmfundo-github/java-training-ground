@@ -3,7 +3,8 @@ package io.javabrains;
 import javax.persistence.*;
 import java.util.Date;
 
-@Entity(name="ACCESS_CARD_DATA")
+@Entity
+@Table(name="ACCESS_CARD_DATA")
 public class AccessCard {
 
     @Id
