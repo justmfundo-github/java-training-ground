@@ -1,4 +1,4 @@
-package io.javabrains.springbootjpaexample;
+package io.javabrains.springbootjpaexample.models;
 
 import jakarta.persistence.*;
 import java.util.Date;
